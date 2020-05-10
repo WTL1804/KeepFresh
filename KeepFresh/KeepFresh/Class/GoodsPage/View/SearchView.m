@@ -27,7 +27,7 @@
     self.headView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, 100)];
     [self addSubview:_headView];
     
-    self.searchField = [[UITextField alloc] initWithFrame:CGRectMake(25, 35, self.frame.size.width - 55, 35)];
+    self.searchField = [[UITextField alloc] initWithFrame:CGRectMake(25, 35, self.frame.size.width - 95, 35)];
     self.searchField.backgroundColor = [UIColor colorWithWhite:0.95 alpha:1];
     self.searchField.layer.borderWidth = 0.1;
     self.searchField.layer.cornerRadius = 5;
@@ -47,6 +47,11 @@
     _mainTableView.delegate = self;
     _mainTableView.dataSource = self;
     
+    _cancelButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [_cancelButton setFrame:CGRectMake(self.frame.size.width - 50, 35, 35, 35)];
+    [_cancelButton setImage:[UIImage imageNamed:@"quxiao.png"] forState:UIControlStateNormal];
+    [_cancelButton addTarget:self action:@selector(clickCancelButton) forControlEvents:UIControlEventTouchUpInside];
+    [self addSubview:_cancelButton];
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return _resultMutArray.count;
@@ -100,5 +105,8 @@
 }
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     [_searchField resignFirstResponder];
+}
+- (void)clickCancelButton {
+    [self.passNameFromCellDelegate clickCancelButton];
 }
 @end

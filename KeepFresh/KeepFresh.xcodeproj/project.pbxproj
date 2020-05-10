@@ -82,6 +82,7 @@
 		84DD174C2395383B00B10515 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 84DD174B2395383B00B10515 /* main.m */; };
 		84DD17562395383C00B10515 /* KeepFreshTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 84DD17552395383C00B10515 /* KeepFreshTests.m */; };
 		84DD17612395383C00B10515 /* KeepFreshUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 84DD17602395383C00B10515 /* KeepFreshUITests.m */; };
+		84E8C1C62467A64D00C8CD7D /* quxiao.png in Resources */ = {isa = PBXBuildFile; fileRef = 84E8C1C52467A64D00C8CD7D /* quxiao.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -227,6 +228,7 @@
 		84DD175C2395383C00B10515 /* KeepFreshUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KeepFreshUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		84DD17602395383C00B10515 /* KeepFreshUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KeepFreshUITests.m; sourceTree = "<group>"; };
 		84DD17622395383C00B10515 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		84E8C1C52467A64D00C8CD7D /* quxiao.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = quxiao.png; sourceTree = "<group>"; };
 		9D843190B34F29CAE2A3E9CB /* libPods-KeepFresh.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-KeepFresh.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B569BC4E36CDE61D67A8DD45 /* Pods-KeepFresh.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KeepFresh.release.xcconfig"; path = "Target Support Files/Pods-KeepFresh/Pods-KeepFresh.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -435,6 +437,7 @@
 				845E1CEF23CC07DE005E4960 /* welcome.png */,
 				8446021823EB0A980077227C /* person.png */,
 				84C9A81123ED397C002EA55D /* quanbu.png */,
+				84E8C1C52467A64D00C8CD7D /* quxiao.png */,
 				84A93D4724029D2E00EAFDA2 /* sousuo-2.png */,
 				84A93D4B2403AB3300EAFDA2 /* head2.jpeg */,
 				84A93D4D2403B15200EAFDA2 /* backGround.jpg */,
@@ -737,6 +740,7 @@
 				84C9A81223ED397C002EA55D /* quanbu.png in Resources */,
 				84A93D4C2403AB3300EAFDA2 /* head2.jpeg in Resources */,
 				8441DC8F2410E54000851AEB /* biaoqian.png in Resources */,
+				84E8C1C62467A64D00C8CD7D /* quxiao.png in Resources */,
 				84DD17462395383B00B10515 /* Assets.xcassets in Resources */,
 				84DD17442395383900B10515 /* Main.storyboard in Resources */,
 				8441DC922410E89900851AEB /* riqi.png in Resources */,

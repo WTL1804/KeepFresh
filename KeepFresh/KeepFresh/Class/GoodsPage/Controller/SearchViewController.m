@@ -52,5 +52,7 @@
     // Pass the selected object to the new view controller.
 }
 */
-
+- (void)clickCancelButton {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
 @end
