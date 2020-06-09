@@ -21,6 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) NSNumber *numberOfItem;
 @property (nonatomic, copy) NSDate *overDue;
 @property (nonatomic, copy) NSString *dataType;
+// 2是正常 1是过期 3是删除 4是耗尽
 @property (nonatomic, copy) NSNumber *itemsState;
 @property (nonatomic, copy) NSString *describeString;
 

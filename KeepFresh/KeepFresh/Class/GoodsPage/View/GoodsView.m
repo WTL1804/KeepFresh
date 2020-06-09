@@ -25,6 +25,7 @@
     _itemsArray = [[NSMutableArray alloc] init];
     _itemsDeletedMutArray = [[NSMutableArray alloc] init];
     _itemsOverDueMutArray = [[NSMutableArray alloc] init];
+    _itemsRunOutMutArray =[[NSMutableArray alloc] init];
     self.mainTableView.dataSource = self;
     self.mainTableView.delegate = self;
     self.mainTableView.backgroundColor = [UIColor whiteColor];

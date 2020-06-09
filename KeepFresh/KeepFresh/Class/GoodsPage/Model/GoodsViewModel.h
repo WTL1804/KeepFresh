@@ -10,11 +10,13 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface GoodsViewModel : NSObject
-- (void)changeNumberOfItem:(NSMutableDictionary *)itemsDict value:(double)value array:(NSMutableArray *)array number:(int)i;
 
 @property (nonatomic, copy) NSString *doPath;
-//检查物品过期和是否被删除
-- (void)goodsInspection:(NSMutableArray *)array overDueMutArray: (NSMutableArray *)overDueArray deleteMutArray:(NSMutableArray *)deleteMutArray;
+
+//物品数量增、减
+- (void)changeNumberOfItem:(NSMutableDictionary *)itemsDict value:(double)value array:(NSMutableArray *)array number:(int)i runOutMutArray:(NSMutableArray *)runOutArray;
+//检查物品过期、是否被删除、是否耗尽
+- (void)goodsInspection:(NSMutableArray *)array overDueMutArray: (NSMutableArray *)overDueArray deleteMutArray:(NSMutableArray *)deleteMutArray runOutOfMutArray:(NSMutableArray *)runOutMutArray;
 //处理网络请求下来的数据
 - (NSDictionary *)ProcessingNetworkRequestDataOfItems:(NSDictionary *)dict;
 //将字符串转为NSDate数据

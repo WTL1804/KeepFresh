@@ -82,8 +82,8 @@
     NSMutableArray *mutArray = [self->_goodsModel  ExtractDataFromTheLocalDatabase];
     self.goodsView.itemsArray = mutArray;
     //[self.goodsView.mainTableView reloadData];
-    //处理过期和已经被删除的物品
-    [_goodsModel goodsInspection:_goodsView.itemsArray overDueMutArray:_goodsView.itemsOverDueMutArray deleteMutArray:_goodsView.itemsDeletedMutArray];
+    //处理过期、已经被删除、耗尽的物品
+    [_goodsModel goodsInspection:_goodsView.itemsArray overDueMutArray:_goodsView.itemsOverDueMutArray deleteMutArray:_goodsView.itemsDeletedMutArray runOutOfMutArray:_goodsView.itemsRunOutMutArray];
 
 }
 - (void)loginToAccessSession {
@@ -118,10 +118,11 @@
             //替换过期数组
             NSMutableArray *arrayOver = [[NSMutableArray alloc] init];
             NSMutableArray *arrayDelete = [[NSMutableArray alloc] init];
-            [self.goodsModel goodsInspection:databaseArray overDueMutArray:arrayOver deleteMutArray:arrayDelete];
-            
-            self.goodsView.itemsOverDueMutArray = arrayOver;
+            NSMutableArray *arrayRunOut = [[NSMutableArray alloc] init];
+            [self.goodsModel goodsInspection:databaseArray overDueMutArray:arrayOver deleteMutArray:arrayDelete runOutOfMutArray:arrayRunOut];
             //替换物品数组
+            self.goodsView.itemsOverDueMutArray = arrayOver;
+            self.goodsView.itemsRunOutMutArray = arrayRunOut;
             self.goodsView.itemsArray = databaseArray;
             self.goodsView.itemsDeletedMutArray = arrayDelete;
            //删除已经过期15天的物品  异步删除
@@ -129,7 +130,7 @@
             if (arrayShouldDelete.count != 0) {
                  dispatch_async(dispatch_get_main_queue(), ^{
                     [[KeepFreshManage sharedLeton] DeleteItemsThatAreFifteenDaysOldWithMutArray:arrayShouldDelete success:^(NSDictionary * _Nonnull dict) {
-                        NSLog(@"过期15天物品删除成功");
+                        NSLog(@"过期中过期15天物品删除成功");
                     } error:^(NSError * _Nonnull error) {
                         NSLog(@"过期15天物品删除失败%@",error);
                     }];
@@ -140,12 +141,24 @@
             if (arrayDeleteShouldDeleted.count != 0) {
                  dispatch_async(dispatch_get_main_queue(), ^{
                     [[KeepFreshManage sharedLeton] DeleteItemsThatAreFifteenDaysOldWithMutArray:arrayDeleteShouldDeleted success:^(NSDictionary * _Nonnull dict) {
-                        NSLog(@"过期15天物品删除成功");
+                        NSLog(@"删除中过期15天物品删除成功");
                     } error:^(NSError * _Nonnull error) {
                         NSLog(@"过期15天物品删除失败%@",error);
                     }];
                 });
             }
+            //删除已经耗尽15天的物品
+            NSMutableArray *arrayRunOutShouldDeleted = [self.goodsModel itemsShouldDeleteFromBackGround:arrayRunOut];;
+            if (arrayRunOutShouldDeleted.count != 0) {
+                 dispatch_async(dispatch_get_main_queue(), ^{
+                    [[KeepFreshManage sharedLeton] DeleteItemsThatAreFifteenDaysOldWithMutArray:arrayRunOutShouldDeleted success:^(NSDictionary * _Nonnull dict) {
+                        NSLog(@"耗尽中过期15天物品删除成功");
+                    } error:^(NSError * _Nonnull error) {
+                        NSLog(@"过期15天物品删除失败%@",error);
+                    }];
+                });
+            }
+            
             
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self.goodsView.mainTableView reloadData];
@@ -212,17 +225,29 @@
 }
 
 //goodsView cell中物品增减方法实现 通过通知
+//增删物品数量
 - (void)numberChange:(NSNotification *)noti {
     NSDictionary *dict = [noti userInfo];
     UIStepper *sc = [dict valueForKey:@"stepper"];
     NSString *name = [dict valueForKey:@"name"];
-        for (int i = 0; i < _goodsView.itemsArray.count; i++) {
-            NSMutableDictionary *dict = _goodsView.itemsArray[i];
-            if ([[dict valueForKey:@"name"] isEqual:name]) {
-                [_goodsModel changeNumberOfItem:_goodsView.itemsArray[i] value:sc.value array:_goodsView.itemsArray number:i];
-                break;
-            }
+    NSMutableArray *runOutArray = [[NSMutableArray alloc] init];
+    for (int i = 0; i < _goodsView.itemsArray.count; i++) {
+        NSMutableDictionary *dict = _goodsView.itemsArray[i];
+        if ([[dict valueForKey:@"name"] isEqual:name]) {
+            [_goodsModel changeNumberOfItem:_goodsView.itemsArray[i] value:sc.value array:_goodsView.itemsArray number:i runOutMutArray:runOutArray];
+            break;
         }
+    }
+    //从数据库删除物品
+    for(int i = 0; i < runOutArray.count;i++) {
+        [_goodsModel deleteItemsFromdataBase:[runOutArray[i] valueForKey:@"name"]];
+        [_goodsView.itemsRunOutMutArray addObject:runOutArray[i]];
+        //异步请求修改物品状态码。
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+        });
+    }
+    
 }
 //模态推出右上角的选项
 - (void)clickAllBtn {
@@ -237,7 +262,7 @@
     more.delegate = self;
     [self presentViewController:nav animated:YES completion:nil];
 }
-//物品过期或者耗尽
+//物品过期
 - (void)clickHeadCell {
     AllItemsViewController *all = [[AllItemsViewController alloc] init];
     all.itemsTempMutArray = [[NSMutableArray alloc] init];
@@ -312,7 +337,6 @@
     
 }
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-    NSLog(@"1234");
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
        if ([defaults objectForKey:@"jsession"]) {
            [self AllItemsRequestWithJsession:[defaults valueForKey:@"jsession"]];

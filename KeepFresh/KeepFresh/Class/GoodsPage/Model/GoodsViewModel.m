@@ -13,15 +13,20 @@
 
 @implementation GoodsViewModel
 
-- (void)changeNumberOfItem:(NSMutableDictionary *)itemsDict value:(double)value array:(NSMutableArray *)array number:(int)i{
+- (void)changeNumberOfItem:(NSMutableDictionary *)itemsDict value:(double)value array:(NSMutableArray *)array number:(int)i runOutMutArray:(nonnull NSMutableArray *)runOutArray {
      Items *tempItems = [[Items alloc] init];
     [tempItems setValuesForKeysWithDictionary:itemsDict];
     tempItems.numberOfItem = [NSNumber numberWithDouble:value];
     NSMutableDictionary *dict2 = [NSMutableDictionary dictionaryWithObjects:@[tempItems.addDate,tempItems.attribute,tempItems.imageData,tempItems.name,tempItems.numberOfItem,tempItems.overDue,tempItems.productionDate,tempItems.shelfLifeNumber,tempItems.dataType, tempItems.itemsState, tempItems.describeString] forKeys:@[@"addDate",@"attribute",@"imageData",@"name",@"numberOfItem",@"overDue",@"productionDate",@"shelfLifeNumber",@"dataType", @"itemsState", @"describeString"]];
     [array removeObjectAtIndex:i];
-    [array insertObject:dict2 atIndex:i];
+    if ([tempItems.numberOfItem intValue] < 1) {
+        tempItems.itemsState = [NSNumber numberWithInt:4];
+        [runOutArray addObject:dict2];
+    } else {
+        [array insertObject:dict2 atIndex:i];
+    }
 }
-- (void)goodsInspection:(NSMutableArray *)array overDueMutArray:(NSMutableArray *)overDueArray deleteMutArray:(NSMutableArray *)deleteMutArray {
+- (void)goodsInspection:(NSMutableArray *)array overDueMutArray:(NSMutableArray *)overDueArray deleteMutArray:(nonnull NSMutableArray *)deleteMutArray runOutOfMutArray:(nonnull NSMutableArray *)runOutMutArray {
     
     for (int i = 0; i < array.count; i++) {
         Items *tempItems = [[Items alloc] init];
@@ -29,21 +34,22 @@
         NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
         NSDateComponents *comp = [calendar components:NSCalendarUnitDay fromDate:[NSDate date] toDate:tempItems.overDue options:NSCalendarWrapComponents];
         NSNumber *number = [NSNumber numberWithInteger:comp.day];
-        
-        
-        if ([number intValue] < 1 || [tempItems.itemsState intValue] == 3) {
-            if([number intValue] < 1)
+        if([number intValue] < 1) {
             tempItems.itemsState = [NSNumber numberWithInt:1];
-            NSMutableDictionary *dict2 = [NSMutableDictionary dictionaryWithObjects:@[tempItems.addDate,tempItems.attribute,tempItems.imageData,tempItems.name,tempItems.numberOfItem,tempItems.overDue,tempItems.productionDate,tempItems.shelfLifeNumber,tempItems.dataType, tempItems.itemsState, tempItems.describeString] forKeys:@[@"addDate",@"attribute",@"imageData",@"name",@"numberOfItem",@"overDue",@"productionDate",@"shelfLifeNumber",@"dataType", @"itemsState", @"describeString"]];
-            if([number intValue] < 1) {
-                [overDueArray addObject:dict2];
-                [array removeObjectAtIndex:i];
-                i = -1;
-            } else {
-                [deleteMutArray addObject:dict2];
-                [array removeObjectAtIndex:i];
-                i = -1;
-            }
+        }
+        NSMutableDictionary *dict2 = [NSMutableDictionary dictionaryWithObjects:@[tempItems.addDate,tempItems.attribute,tempItems.imageData,tempItems.name,tempItems.numberOfItem,tempItems.overDue,tempItems.productionDate,tempItems.shelfLifeNumber,tempItems.dataType, tempItems.itemsState, tempItems.describeString] forKeys:@[@"addDate",@"attribute",@"imageData",@"name",@"numberOfItem",@"overDue",@"productionDate",@"shelfLifeNumber",@"dataType", @"itemsState", @"describeString"]];
+        if([number intValue] < 1) {
+            [overDueArray addObject:dict2];
+            [array removeObjectAtIndex:i];
+            i = -1;
+        } else if ([tempItems.itemsState intValue] == 3){
+            [deleteMutArray addObject:dict2];
+            [array removeObjectAtIndex:i];
+            i = -1;
+        } else {
+            [runOutMutArray addObject:dict2];
+            [array removeObjectAtIndex:i];
+            i = -1;
         }
     }
 }
