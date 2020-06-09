@@ -293,10 +293,10 @@ static KeepFreshManage *manageCustom;
         }];
 
 }
-- (void)ModifyStatusCodeWithString:(NSString *)string success:(ModifyStatusCodeHandle)successBlock error:(ErrorHandle)errorBlock {
+- (void)ModifyStatusCodeWithString:(NSString *)string StatusCode:(int)statusCode success:(ModifyStatusCodeHandle)successBlock error:(ErrorHandle)errorBlock {
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    NSDictionary *paramDict = @{@"itemsName":string};
-    NSString *url = @"http://116.62.179.174:8080/whpro/product/updatePro.do";
+    NSDictionary *paramDict = @{@"itemsName":string,@"status":[NSNumber numberWithInt:statusCode]};
+    NSString *url = @"http://116.62.179.174:8080/whpro/product/updateProStu.do";
     [manager POST:url parameters:paramDict progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         NSDictionary *dict = [[NSDictionary alloc] initWithDictionary:responseObject];
         successBlock(dict);

@@ -57,7 +57,7 @@ typedef void (^ModifyStatusCodeHandle)(NSDictionary *dict);
 //删除过期15天的物品
 - (void)DeleteItemsThatAreFifteenDaysOldWithMutArray:(NSMutableArray *)array success:(DeletFifhteenHandle)successBlock error:(ErrorHandle)errorBlock;
 //修改物品的状态码
-- (void)ModifyStatusCodeWithString:(NSString *)string success:(ModifyStatusCodeHandle)successBlock error:(ErrorHandle)errorBlock;
+- (void)ModifyStatusCodeWithString:(NSString *)string StatusCode:(int)statusCode success:(ModifyStatusCodeHandle)successBlock error:(ErrorHandle)errorBlock;
 
 @property (nonatomic, copy) NSString *access_token;
 @property (nonatomic, copy) NSString *image;

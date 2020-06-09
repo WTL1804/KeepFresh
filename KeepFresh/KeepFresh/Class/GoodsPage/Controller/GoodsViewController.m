@@ -84,7 +84,7 @@
     //[self.goodsView.mainTableView reloadData];
     //处理过期、已经被删除、耗尽的物品
     [_goodsModel goodsInspection:_goodsView.itemsArray overDueMutArray:_goodsView.itemsOverDueMutArray deleteMutArray:_goodsView.itemsDeletedMutArray runOutOfMutArray:_goodsView.itemsRunOutMutArray];
-
+    NSLog(@"123");
 }
 - (void)loginToAccessSession {
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
@@ -238,14 +238,22 @@
             break;
         }
     }
+    [_goodsView.mainTableView reloadData];
     //从数据库删除物品
-    for(int i = 0; i < runOutArray.count;i++) {
-        [_goodsModel deleteItemsFromdataBase:[runOutArray[i] valueForKey:@"name"]];
-        [_goodsView.itemsRunOutMutArray addObject:runOutArray[i]];
-        //异步请求修改物品状态码。
-        dispatch_async(dispatch_get_main_queue(), ^{
-            
-        });
+    if (runOutArray.count != 0) {
+        for(int i = 0; i < runOutArray.count;i++) {
+            [_goodsModel deleteItemsFromdataBase:[runOutArray[i] valueForKey:@"name"]];
+            [_goodsView.itemsRunOutMutArray addObject:runOutArray[i]];
+            //异步请求修改物品状态码。
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [[KeepFreshManage sharedLeton] ModifyStatusCodeWithString:[runOutArray[i] valueForKey:@"name"] StatusCode:4 success:^(NSDictionary * _Nonnull dict) {
+                    NSLog(@"%@",dict);
+                    NSLog(@"耗尽物品修改状态码成功");
+                } error:^(NSError * _Nonnull error) {
+                    NSLog(@"耗尽物品修改状态码失败");
+                }];
+            });
+        }
     }
     
 }
@@ -326,15 +334,16 @@
     
 }
 - (void)deleteItems:(NSMutableDictionary *)dict {
-    //从后台删除物品
-    [[KeepFreshManage sharedLeton] ModifyStatusCodeWithString:[dict valueForKey:@"name"] success:^(NSDictionary * _Nonnull dict) {
-        NSLog(@"修改状态码成功");
-    } error:^(NSError * _Nonnull error) {
-        NSLog(@"修改状态码失败%@",error);
-    }];
-    //从数据库删除物品
-    [self.goodsModel deleteItemsFromdataBase:[dict valueForKey:@"name"]];
-    
+    //从后台修改状态码物品异步
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [[KeepFreshManage sharedLeton] ModifyStatusCodeWithString:[dict valueForKey:@"name"] StatusCode:3 success:^(NSDictionary * _Nonnull dict) {
+            NSLog(@"被删除的物品状态码修改成功");
+        } error:^(NSError * _Nonnull error) {
+            NSLog(@"被删除的物品状态码修改失败");
+        }];
+        //从数据库删除物品
+        [self.goodsModel deleteItemsFromdataBase:[dict valueForKey:@"name"]];
+    });
 }
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];

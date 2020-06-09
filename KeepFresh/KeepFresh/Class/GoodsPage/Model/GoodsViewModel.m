@@ -34,11 +34,11 @@
         NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
         NSDateComponents *comp = [calendar components:NSCalendarUnitDay fromDate:[NSDate date] toDate:tempItems.overDue options:NSCalendarWrapComponents];
         NSNumber *number = [NSNumber numberWithInteger:comp.day];
-        if([number intValue] < 1) {
+        if([number intValue] < 1 && [tempItems.itemsState intValue] == 2) {
             tempItems.itemsState = [NSNumber numberWithInt:1];
         }
         NSMutableDictionary *dict2 = [NSMutableDictionary dictionaryWithObjects:@[tempItems.addDate,tempItems.attribute,tempItems.imageData,tempItems.name,tempItems.numberOfItem,tempItems.overDue,tempItems.productionDate,tempItems.shelfLifeNumber,tempItems.dataType, tempItems.itemsState, tempItems.describeString] forKeys:@[@"addDate",@"attribute",@"imageData",@"name",@"numberOfItem",@"overDue",@"productionDate",@"shelfLifeNumber",@"dataType", @"itemsState", @"describeString"]];
-        if([number intValue] < 1) {
+        if([number intValue] < 1 && [tempItems.itemsState intValue] == 2) {
             [overDueArray addObject:dict2];
             [array removeObjectAtIndex:i];
             i = -1;
@@ -46,7 +46,7 @@
             [deleteMutArray addObject:dict2];
             [array removeObjectAtIndex:i];
             i = -1;
-        } else {
+        } else if ([tempItems.itemsState integerValue] == 4){
             [runOutMutArray addObject:dict2];
             [array removeObjectAtIndex:i];
             i = -1;
@@ -60,7 +60,7 @@
     NSString *attribute = [dict valueForKey:@"attribute"];
     NSString *name = [dict valueForKey:@"name"];
     NSNumber *shelfLifeNumber = [dict valueForKey:@"shelfLifeNumber"];
-    NSString *itemsState = [dict valueForKey:@"itemsState"];
+    NSNumber *itemsState = [dict valueForKey:@"itemsState"];
     NSNumber *numberOfItem = [dict valueForKey:@"numberOfItem"];
     NSString *dataType = @"ModelTwo";
     NSString *describeString = [dict valueForKey:@"describeString"];
@@ -69,7 +69,7 @@
     NSData *imageData = [NSData dataWithContentsOfURL:urlImage options:0 error:nil];
     
     
-    NSMutableDictionary *dictTemp = [NSMutableDictionary dictionaryWithObjects:@[addDate,attribute,imageData,name,numberOfItem,overDue,productionDate,shelfLifeNumber,dataType,itemsState, describeString] forKeys:@[@"addDate",@"attribute",@"imageData",@"name",@"numberOfItem",@"overDue",@"productionDate",@"shelfLifeNumber",@"dataType",@"itemsState", @"describeString"]];
+    NSMutableDictionary *dictTemp = [NSMutableDictionary dictionaryWithObjects:@[addDate,attribute,imageData,name,numberOfItem,overDue,productionDate,shelfLifeNumber,dataType, itemsState, describeString] forKeys:@[@"addDate",@"attribute",@"imageData",@"name",@"numberOfItem",@"overDue",@"productionDate",@"shelfLifeNumber",@"dataType",@"itemsState", @"describeString"]];
     return dictTemp;
 }
 - (NSDate *)ProcessingDateFromString:(NSString *)string {
@@ -103,7 +103,7 @@
          NSString *attribute = [dict valueForKey:@"attribute"];
          NSString *name = [dict valueForKey:@"name"];
          NSNumber *shelfLifeNumber = [dict valueForKey:@"shelfLifeNumber"];
-         NSString *itemsState = [dict valueForKey:@"itemsState"];
+         NSNumber *itemsState = [dict valueForKey:@"itemsState"];
          NSNumber *numberOfItem = [dict valueForKey:@"numberOfItem"];
         NSString *dataType = [dict valueForKey:@"dataType"];
          NSString *describeString = [dict valueForKey:@"describeString"];
@@ -161,7 +161,7 @@
      NSString *attribute = [dict valueForKey:@"attribute"];
      NSString *name = [dict valueForKey:@"name"];
      NSNumber *shelfLifeNumber = [dict valueForKey:@"shelfLifeNumber"];
-     NSString *itemsState = [dict valueForKey:@"itemsState"];
+     NSNumber *itemsState = [dict valueForKey:@"itemsState"];
      NSNumber *numberOfItem = [dict valueForKey:@"numberOfItem"];
      NSString *dataType = @"ModelTwo";
      NSString *describeString = [dict valueForKey:@"describeString"];
@@ -213,7 +213,7 @@
 - (void)deleteItemsFromdataBase:(NSString *)nameString {
     FMDatabase *db = [FMDatabase databaseWithPath:self.doPath];
            if ([db open]) {
-               NSString *sql =[NSString stringWithFormat: @"delete * from wh_items where name = %@;", nameString];
+               NSString *sql =[NSString stringWithFormat: @"delete from wh_items where name = '%@';", nameString];
                BOOL res = [db executeUpdate:sql];
                if (!res) {
                    NSLog(@"数据删除失败");
