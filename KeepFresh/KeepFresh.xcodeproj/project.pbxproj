@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		2DAF5BCAAB755510CED7AD5A /* libPods-KeepFresh.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D843190B34F29CAE2A3E9CB /* libPods-KeepFresh.a */; };
+		84152C5D2493C4D300AA3D58 /* RunOutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84152C5C2493C4D300AA3D58 /* RunOutViewController.m */; };
+		84152C602493C53900AA3D58 /* RunOutView.m in Sources */ = {isa = PBXBuildFile; fileRef = 84152C5F2493C53800AA3D58 /* RunOutView.m */; };
 		8441DC8C2410E45C00851AEB /* 照相机.png in Resources */ = {isa = PBXBuildFile; fileRef = 8441DC8B2410E45C00851AEB /* 照相机.png */; };
 		8441DC8F2410E54000851AEB /* biaoqian.png in Resources */ = {isa = PBXBuildFile; fileRef = 8441DC8D2410E53F00851AEB /* biaoqian.png */; };
 		8441DC902410E54000851AEB /* shuxing.png in Resources */ = {isa = PBXBuildFile; fileRef = 8441DC8E2410E53F00851AEB /* shuxing.png */; };
@@ -104,6 +106,10 @@
 
 /* Begin PBXFileReference section */
 		6674C06A9C623361F49A8A0B /* Pods-KeepFresh.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KeepFresh.debug.xcconfig"; path = "Target Support Files/Pods-KeepFresh/Pods-KeepFresh.debug.xcconfig"; sourceTree = "<group>"; };
+		84152C5B2493C4D300AA3D58 /* RunOutViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RunOutViewController.h; sourceTree = "<group>"; };
+		84152C5C2493C4D300AA3D58 /* RunOutViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RunOutViewController.m; sourceTree = "<group>"; };
+		84152C5E2493C53800AA3D58 /* RunOutView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RunOutView.h; sourceTree = "<group>"; };
+		84152C5F2493C53800AA3D58 /* RunOutView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RunOutView.m; sourceTree = "<group>"; };
 		8441DC8B2410E45C00851AEB /* 照相机.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "照相机.png"; sourceTree = "<group>"; };
 		8441DC8D2410E53F00851AEB /* biaoqian.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = biaoqian.png; sourceTree = "<group>"; };
 		8441DC8E2410E53F00851AEB /* shuxing.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shuxing.png; sourceTree = "<group>"; };
@@ -338,6 +344,8 @@
 				84C9A81D23EFDEB9002EA55D /* AllItemsView.m */,
 				8444E80D24571C2B00301289 /* SearchView.h */,
 				8444E80E24571C2B00301289 /* SearchView.m */,
+				84152C5E2493C53800AA3D58 /* RunOutView.h */,
+				84152C5F2493C53800AA3D58 /* RunOutView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -355,6 +363,8 @@
 				84C9A81A23EEE525002EA55D /* AllItemsViewController.m */,
 				8444E80A245719C100301289 /* SearchViewController.h */,
 				8444E80B245719C100301289 /* SearchViewController.m */,
+				84152C5B2493C4D300AA3D58 /* RunOutViewController.h */,
+				84152C5C2493C4D300AA3D58 /* RunOutViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -819,6 +829,7 @@
 				84BB92A224066BCB00FC8183 /* ItemsShowsView.m in Sources */,
 				846BD31F23D3F0A100133FF7 /* PhotoIdentificationModel.m in Sources */,
 				8446021723E8480C0077227C /* ModelTwoCell.m in Sources */,
+				84152C5D2493C4D300AA3D58 /* RunOutViewController.m in Sources */,
 				84544FDC23D0962900639E34 /* BaseTableViewCell.m in Sources */,
 				8444E81D24584DC300301289 /* SearchViewController.m in Sources */,
 				8462478023A5ADF80022EF97 /* DiscoveryViewController.m in Sources */,
@@ -842,6 +853,7 @@
 				8462477D23A5ADE00022EF97 /* DiscoveryView.m in Sources */,
 				84762BA423A6328100713ECA /* WelComeView.m in Sources */,
 				845E1CF323CFF0FD005E4960 /* GoodsHeadView.m in Sources */,
+				84152C602493C53900AA3D58 /* RunOutView.m in Sources */,
 				84BB92DA240FCAED00FC8183 /* RegisterView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
