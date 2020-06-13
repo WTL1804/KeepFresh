@@ -19,7 +19,7 @@
 #import "ItemsGoodsViewModel.h"
 #import "SearchViewController.h"
 #import "RunOutViewController.h"
-@interface GoodsViewController () <clickAllBtnDeleage, clickTheHeadCell, clickPersonDelegate, textFieldFocusedDelegate, passCellOfSection, DeleteItemsDelegate>
+@interface GoodsViewController () <clickAllBtnDeleage, clickTheHeadCell, clickPersonDelegate, textFieldFocusedDelegate, passCellOfSection, DeleteItemsDelegate, PutBackDeletedDelegate, PutBackRunOutOfItemsDelegate>
 
 @end
 
@@ -85,7 +85,6 @@
     //[self.goodsView.mainTableView reloadData];
     //处理过期、已经被删除、耗尽的物品
     [_goodsModel goodsInspection:_goodsView.itemsArray overDueMutArray:_goodsView.itemsOverDueMutArray deleteMutArray:_goodsView.itemsDeletedMutArray runOutOfMutArray:_goodsView.itemsRunOutMutArray];
-    NSLog(@"123");
 }
 - (void)loginToAccessSession {
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
@@ -289,6 +288,7 @@
 - (void)clickSecondCell {
     AllItemsViewController *all = [[AllItemsViewController alloc] init];
     all.itemsTempMutArray = [[NSMutableArray alloc] init];
+    all.putBackDeletedDelegate = self;
     for (int i = 0; i < self->_goodsView.itemsDeletedMutArray.count; i++) {
         NSMutableDictionary *dict = [self->_goodsView.itemsDeletedMutArray[i] mutableCopy];
         NSString *dataType = @"ModelOne";
@@ -299,10 +299,31 @@
     }
     [self.navigationController pushViewController:all animated:YES];
 }
+//删除物品放回
+- (void)putBackDeletedWithDict:(NSMutableDictionary *)dict {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [[KeepFreshManage sharedLeton] ModifyStatusCodeWithString:[dict valueForKey:@"name"] StatusCode:2 success:^(NSDictionary * _Nonnull dict) {
+            NSLog(@"删除的物品放回成功");
+        } error:^(NSError * _Nonnull error) {
+            NSLog(@"删除的物品放回失败");
+        }];
+        [self.goodsModel deleteItemsFromdataBase:[dict valueForKey:@"name"]];
+        for(NSMutableDictionary *tempDict in self.goodsView.itemsDeletedMutArray) {
+            if ([[dict valueForKey:@"name"] isEqual:[tempDict valueForKey:@"name"]]) {
+                [self.goodsView.itemsDeletedMutArray removeObject:tempDict];
+                break;
+            }
+        }
+    });
+    [self.goodsView.itemsArray addObject:dict];
+    [self.goodsView.mainTableView reloadData];
+}
+
 //物品耗尽站
 - (void)clickThirdCell {
     RunOutViewController *run = [[RunOutViewController alloc] init];
     run.runOutTempMutArray = [[NSMutableArray alloc] init];
+    run.putBackRunOutOfItemsDelegate = self;
     for (int i = 0; i < self->_goodsView.itemsRunOutMutArray.count; i++) {
         NSMutableDictionary *dict = [self->_goodsView.itemsRunOutMutArray[i] mutableCopy];
         NSString *dataType = @"ModelRunOut";
@@ -310,9 +331,28 @@
         [dict setValue:dataType forKey:@"dataType"];
         [run.runOutTempMutArray addObject:dict];
         //NSLog(@"转换完成");
+        
     }
     [self.navigationController pushViewController:run animated:YES];
-
+}
+//耗尽物品放回
+- (void)putBackRunOutWithDict:(NSMutableDictionary *)dict {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [[KeepFreshManage sharedLeton] ModifyStatusCodeWithString:[dict valueForKey:@"name"] StatusCode:2 success:^(NSDictionary * _Nonnull dict) {
+            NSLog(@"耗尽的物品放回成功");
+        } error:^(NSError * _Nonnull error) {
+            NSLog(@"耗尽的物品放回失败");
+        }];
+        for(NSMutableDictionary *tempDict in self.goodsView.itemsRunOutMutArray) {
+            if ([[dict valueForKey:@"name"] isEqual:[tempDict valueForKey:@"name"]]) {
+                [self.goodsView.itemsRunOutMutArray removeObject:tempDict];
+                break;
+            }
+        }
+        [self.goodsModel deleteItemsFromdataBase:[dict valueForKey:@"name"]];
+    });
+     [self.goodsView.itemsArray addObject:dict];
+    [self.goodsView.mainTableView reloadData];
 }
 /*
 #pragma mark - Navigation

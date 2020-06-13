@@ -8,7 +8,7 @@
 
 #import "AllItemsViewController.h"
 #import "AllItemsView.h"
-@interface AllItemsViewController ()
+@interface AllItemsViewController () <PutBackDeletedItemsDelegate>
 
 @end
 
@@ -27,6 +27,7 @@
     [self.view addSubview:_allView];
     _allView.itemsOverDueMutArray = [[NSMutableArray alloc] init];
     _allView.itemsOverDueMutArray = _itemsTempMutArray;
+    _allView.putBackDeleteItemsDelegate = self;
     [_allView setUI];
 }
 - (void)clickLeftBarButton {
@@ -37,7 +38,9 @@
     self.tabBarController.tabBar.hidden = YES;
 }
 
-
+- (void)PutBackDeleted:(NSMutableDictionary *)dict {
+    [self.putBackDeletedDelegate putBackDeletedWithDict:dict];
+}
 /*
 #pragma mark - Navigation
 

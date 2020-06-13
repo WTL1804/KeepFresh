@@ -9,7 +9,7 @@
 #import "RunOutViewController.h"
 #import "RunOutView.h"
 
-@interface RunOutViewController ()
+@interface RunOutViewController () <PutBackRunOutDelegate>
 
 @end
 
@@ -24,9 +24,12 @@
     _runOutView = [[RunOutView alloc] initWithFrame:CGRectMake(0, self.navigationController.navigationBar.frame.size.height, self.view.frame.size.width, self.view.frame.size.height - self.tabBarController.tabBar.frame.size.height)];
     [self.view addSubview:_runOutView];
     _runOutView.itemsRunOutMutArray = _runOutTempMutArray;
+    _runOutView.putBackRunOutDelegate = self;
     [_runOutView setUI];
 }
-
+- (void)PutBackRunOut:(NSMutableDictionary *)dict {
+    [self.putBackRunOutOfItemsDelegate putBackRunOutWithDict:dict];
+}
 /*
 #pragma mark - Navigation
 

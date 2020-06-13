@@ -10,6 +10,11 @@
 
 NS_ASSUME_NONNULL_BEGIN
 @class AllItemsView;
+@protocol PutBackDeletedDelegate <NSObject>
+
+- (void)putBackDeletedWithDict:(NSMutableDictionary *)dict;
+
+@end
 @interface AllItemsViewController : UIViewController
 
 @property (nonatomic, strong) UIBarButtonItem *leftBarButton;
@@ -17,6 +22,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) AllItemsView *allView;
 
 @property (nonatomic, strong) NSMutableArray *itemsTempMutArray;
+
+@property (nonatomic, weak) id <PutBackDeletedDelegate>putBackDeletedDelegate;
+
 @end
 
 NS_ASSUME_NONNULL_END

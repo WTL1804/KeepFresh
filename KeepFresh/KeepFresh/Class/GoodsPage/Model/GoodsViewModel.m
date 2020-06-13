@@ -175,7 +175,7 @@
         NSString *docuPath = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0];
         NSString *doPath = [docuPath stringByAppendingPathComponent:@"itemsArray.sqlite"];
          self.doPath = doPath;
-         NSLog(@"%@",doPath);
+         //NSLog(@"%@",doPath);
      }
     return self;
     

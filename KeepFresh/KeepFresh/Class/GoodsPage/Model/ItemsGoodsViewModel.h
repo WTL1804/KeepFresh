@@ -31,7 +31,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface ItemsGoodsViewModel : JSONModel
 @property (nonatomic, strong) NSArray <DataArrayModel> *data;
 
-- (NSDate *)ProcessingDateFromString:(NSString *)string;
+//- (NSDate *)ProcessingDateFromString:(NSString *)string;
 @end
 
 NS_ASSUME_NONNULL_END

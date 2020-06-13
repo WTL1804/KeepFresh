@@ -11,13 +11,20 @@
 @class BaseModel;
 @class BezierPathView;
 NS_ASSUME_NONNULL_BEGIN
+@protocol PutBackDeletedItemsDelegate <NSObject>
+
+- (void)PutBackDeleted:(NSMutableDictionary *)dict;
+
+@end
+
+
 
 @interface AllItemsView : UIView <UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic, strong) UITableView *mainTableView;
 @property (nonatomic, strong) BaseTableViewCell *baseCell;
 @property (nonatomic, strong) NSMutableArray *itemsOverDueMutArray;
-
+@property (nonatomic, weak) id<PutBackDeletedItemsDelegate>putBackDeleteItemsDelegate;
 
 
 - (void)setUI;

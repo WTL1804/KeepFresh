@@ -9,7 +9,11 @@
 #import <UIKit/UIKit.h>
 @class RunOutView;
 NS_ASSUME_NONNULL_BEGIN
+@protocol PutBackRunOutOfItemsDelegate <NSObject>
 
+- (void)putBackRunOutWithDict:(NSMutableDictionary *)dict;
+
+@end
 @interface RunOutViewController : UIViewController
 
 @property (nonatomic, strong) NSMutableArray *runOutTempMutArray;
@@ -17,6 +21,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) RunOutView *runOutView;
 
 @property (nonatomic, strong) UIBarButtonItem *leftBarButton;
+
+@property (nonatomic, weak) id <PutBackRunOutOfItemsDelegate>putBackRunOutOfItemsDelegate;
 
 @end
 
