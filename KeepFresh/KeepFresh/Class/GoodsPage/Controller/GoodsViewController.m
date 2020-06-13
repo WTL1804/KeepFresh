@@ -18,6 +18,7 @@
 #import "KeepFreshManage.h"
 #import "ItemsGoodsViewModel.h"
 #import "SearchViewController.h"
+#import "RunOutViewController.h"
 @interface GoodsViewController () <clickAllBtnDeleage, clickTheHeadCell, clickPersonDelegate, textFieldFocusedDelegate, passCellOfSection, DeleteItemsDelegate>
 
 @end
@@ -297,6 +298,21 @@
         //NSLog(@"转换完成");
     }
     [self.navigationController pushViewController:all animated:YES];
+}
+//物品耗尽站
+- (void)clickThirdCell {
+    RunOutViewController *run = [[RunOutViewController alloc] init];
+    run.runOutTempMutArray = [[NSMutableArray alloc] init];
+    for (int i = 0; i < self->_goodsView.itemsRunOutMutArray.count; i++) {
+        NSMutableDictionary *dict = [self->_goodsView.itemsRunOutMutArray[i] mutableCopy];
+        NSString *dataType = @"ModelRunOut";
+        [dict removeObjectForKey:@"dataType"];
+        [dict setValue:dataType forKey:@"dataType"];
+        [run.runOutTempMutArray addObject:dict];
+        //NSLog(@"转换完成");
+    }
+    [self.navigationController pushViewController:run animated:YES];
+
 }
 /*
 #pragma mark - Navigation

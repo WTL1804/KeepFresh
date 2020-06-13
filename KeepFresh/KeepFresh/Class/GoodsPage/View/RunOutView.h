@@ -10,10 +10,13 @@
 @class BaseTableViewCell;
 NS_ASSUME_NONNULL_BEGIN
 
-@interface RunOutView : UIView
+@interface RunOutView : UIView <UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, strong) UITableView *mainTableView;
 @property (nonatomic, strong) BaseTableViewCell *baseCell;
-@property (nonatomic, strong) NSMutableArray *itemsOverDueMutArray;
+@property (nonatomic, strong) NSMutableArray *itemsRunOutMutArray;
+
+- (void)setUI;
+
 @end
 
 NS_ASSUME_NONNULL_END

@@ -67,6 +67,10 @@
         [self.delegate clickSecondCell];
         [self dismissViewControllerAnimated:NO completion:nil];
     }
+    if (indexPath.section == 2) {
+        [self.delegate clickThirdCell];
+        [self dismissViewControllerAnimated:NO completion:nil];
+    }
 }
 - (void)viewWillAppear:(BOOL)animated {
     self.navigationController.navigationBar.hidden = YES;

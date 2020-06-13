@@ -21,8 +21,10 @@
     _leftBarButton = [[UIBarButtonItem alloc] initWithTitle:@"<-Back" style:UIBarButtonItemStylePlain target:self action:@selector(clickLeftBarButton)];
     self.navigationItem.leftBarButtonItem = _leftBarButton;
     // Do any additional setup after loading the view.
-    RunOutView *run = [[RunOutView alloc] initWithFrame:CGRectMake(0, self.navigationController.navigationBar.frame.size.height, self.view.frame.size.width, self.view.frame.size.height - self.tabBarController.tabBar.frame.size.height)];
-    [self.view addSubview:run];
+    _runOutView = [[RunOutView alloc] initWithFrame:CGRectMake(0, self.navigationController.navigationBar.frame.size.height, self.view.frame.size.width, self.view.frame.size.height - self.tabBarController.tabBar.frame.size.height)];
+    [self.view addSubview:_runOutView];
+    _runOutView.itemsRunOutMutArray = _runOutTempMutArray;
+    [_runOutView setUI];
 }
 
 /*

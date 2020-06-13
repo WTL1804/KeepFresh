@@ -10,6 +10,7 @@
 #import "ModelOne.h"
 #import "ModelTwo.h"
 #import "ModelSearch.h"
+#import "ModelRunOut.h"
 @implementation BaseModel
 
 + (instancetype)initWithDictionary:(NSDictionary *)dictionary {
@@ -20,6 +21,8 @@
         baseModel =  [[ModelTwo alloc] init];
     } else if ([dictionary[@"dataType"] isEqual:@"ModelSearch"]) {
         baseModel = [[ModelSearch alloc] init];
+    } else if ([dictionary[@"dataType"] isEqual:@"ModelRunOut"]){
+        baseModel = [[ModelRunOut alloc] init];
     }
     [baseModel setValuesForKeysWithDictionary:dictionary];
     return baseModel;
