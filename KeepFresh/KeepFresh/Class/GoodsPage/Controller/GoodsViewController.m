@@ -231,6 +231,16 @@
     UIStepper *sc = [dict valueForKey:@"stepper"];
     NSString *name = [dict valueForKey:@"name"];
     NSMutableArray *runOutArray = [[NSMutableArray alloc] init];
+    NSMutableArray *array = [[NSMutableArray alloc] init];
+    [array addObject:[dict valueForKey:@"name"]];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [[KeepFreshManage sharedLeton] DeleteItemsThatAreFifteenDaysOldWithMutArray:array success:^(NSDictionary * _Nonnull dict) {
+            NSLog(@"数量变化1")
+        } error:^(NSError * _Nonnull error) {
+            
+        }];
+        
+    });
     for (int i = 0; i < _goodsView.itemsArray.count; i++) {
         NSMutableDictionary *dict = _goodsView.itemsArray[i];
         if ([[dict valueForKey:@"name"] isEqual:name]) {
