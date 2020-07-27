@@ -33,6 +33,7 @@
 		8446021923EB0A980077227C /* person.png in Resources */ = {isa = PBXBuildFile; fileRef = 8446021823EB0A980077227C /* person.png */; };
 		84468FDD241654D700A4C162 /* UploadImageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 84468FDC241654D700A4C162 /* UploadImageModel.m */; };
 		84468FE0241657F000A4C162 /* AdditemsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 84468FDF241657F000A4C162 /* AdditemsModel.m */; };
+		8449E02C24C8783B0005323F /* CharacterRecognitionModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8449E02B24C8783B0005323F /* CharacterRecognitionModel.m */; };
 		844C4C032463C188004B7B20 /* yiguoqi.png in Resources */ = {isa = PBXBuildFile; fileRef = 844C4C022463C188004B7B20 /* yiguoqi.png */; };
 		844C4C062463C78F004B7B20 /* xiaohaopin.png in Resources */ = {isa = PBXBuildFile; fileRef = 844C4C042463C78F004B7B20 /* xiaohaopin.png */; };
 		844C4C072463C78F004B7B20 /* shanchu.png in Resources */ = {isa = PBXBuildFile; fileRef = 844C4C052463C78F004B7B20 /* shanchu.png */; };
@@ -149,6 +150,8 @@
 		84468FDC241654D700A4C162 /* UploadImageModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UploadImageModel.m; sourceTree = "<group>"; };
 		84468FDE241657F000A4C162 /* AdditemsModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AdditemsModel.h; sourceTree = "<group>"; };
 		84468FDF241657F000A4C162 /* AdditemsModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AdditemsModel.m; sourceTree = "<group>"; };
+		8449E02A24C8783B0005323F /* CharacterRecognitionModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CharacterRecognitionModel.h; sourceTree = "<group>"; };
+		8449E02B24C8783B0005323F /* CharacterRecognitionModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CharacterRecognitionModel.m; sourceTree = "<group>"; };
 		844C4C022463C188004B7B20 /* yiguoqi.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = yiguoqi.png; sourceTree = "<group>"; };
 		844C4C042463C78F004B7B20 /* xiaohaopin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = xiaohaopin.png; sourceTree = "<group>"; };
 		844C4C052463C78F004B7B20 /* shanchu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shanchu.png; sourceTree = "<group>"; };
@@ -394,6 +397,8 @@
 				84468FDF241657F000A4C162 /* AdditemsModel.m */,
 				8444E8192457CED900301289 /* SearchViewModel.h */,
 				8444E81A2457CED900301289 /* SearchViewModel.m */,
+				8449E02A24C8783B0005323F /* CharacterRecognitionModel.h */,
+				8449E02B24C8783B0005323F /* CharacterRecognitionModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -859,6 +864,7 @@
 				8444E81C24584D9700301289 /* GoodsViewController.m in Sources */,
 				8446020023E8401A0077227C /* BaseModel.m in Sources */,
 				84BB92D4240F3D0800FC8183 /* LoginView.m in Sources */,
+				8449E02C24C8783B0005323F /* CharacterRecognitionModel.m in Sources */,
 				84C9A82123F0063A002EA55D /* GoodsViewModel.m in Sources */,
 				8446021423E847F00077227C /* ModelOneCell.m in Sources */,
 				84152C6624944CF400AA3D58 /* ModelRunOut.m in Sources */,

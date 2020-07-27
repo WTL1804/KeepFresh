@@ -5,6 +5,6 @@
       location = "group:Pods/Pods.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:KeepFresh.xcodeproj">
+      location = "group:/Users/wangtianliang/Desktop/KeepFresh/KeepFresh/KeepFresh.xcodeproj">
    </FileRef>
 </Workspace>

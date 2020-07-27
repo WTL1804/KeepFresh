@@ -235,7 +235,7 @@
     [array addObject:[dict valueForKey:@"name"]];
     dispatch_async(dispatch_get_main_queue(), ^{
         [[KeepFreshManage sharedLeton] DeleteItemsThatAreFifteenDaysOldWithMutArray:array success:^(NSDictionary * _Nonnull dict) {
-            NSLog(@"数量变化1")
+            NSLog(@"数量变化1");
         } error:^(NSError * _Nonnull error) {
             
         }];

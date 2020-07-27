@@ -11,6 +11,7 @@
 #import "Access_tokenModel.h"
 #import "PhotoIdentificationModel.h"
 #import "AdditemsModel.h"
+#import "CharacterRecognitionModel.h"
 
 @interface AddItemsViewController () <ClickCamera, SumbitClickedDelegate>
 
@@ -123,6 +124,7 @@
     self.addItemsView.addItems.imageData = [data copy];
 }
 - (void)obtainAccess_token {
+    
     [[KeepFreshManage sharedLeton] toOtainAccess_token:^(Access_tokenModel * accessTokenModel) {
         self.access_token = accessTokenModel.access_token;
     } error:^(NSError * _Nonnull error) {
@@ -132,18 +134,26 @@
 }
 //图像识别
 - (void)photoIdentification {
-    [[KeepFreshManage sharedLeton] identification:^(PhotoIdentificationModel * _Nonnull identificationModel) {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [[KeepFreshManage sharedLeton] identification:^(PhotoIdentificationModel * _Nonnull identificationModel) {
         NSLog(@"照片里很可能是%@   概率为%@", [identificationModel.result[0] valueForKey:@"keyword"], [identificationModel.result[0] valueForKey:@"score"]);
         dispatch_async(dispatch_get_main_queue(), ^{
-            
             self.addItemsView.addItems.attribute = [identificationModel.result[0] valueForKey:@"keyword"];
             self.addItemsView.itemNamePropertiesTextField.text = [identificationModel.result[0] valueForKey:@"keyword"];
-            
+                
         });
-        
-    } error:^(NSError * _Nonnull error) {
-        NSLog(@"图像识别失败");
-    }];
+        } error:^(NSError * _Nonnull error) {
+            NSLog(@"图像识别失败");
+        }];
+        [[KeepFreshManage sharedLeton] BaiDuCharacterRecognition:^(CharacterRecognitionModel * _Nonnull characterRecognitionModel) {
+            for (NSDictionary *dict in characterRecognitionModel.words_result) {
+                NSLog(@"%@", [dict valueForKey:@"words"]);
+            }
+            
+        } error:^(NSError * _Nonnull error) {
+            NSLog(@"%@", error);
+        }];
+    });
 }
 - (void)addDone {
     

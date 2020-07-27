@@ -15,6 +15,7 @@
 #import "itemsGoodsViewModel.h"
 #import "Items.h"
 #import "UploadImageModel.h"
+#import "CharacterRecognitionModel.h"
 static KeepFreshManage *manageCustom;
 @implementation KeepFreshManage
 + (instancetype) sharedLeton {
@@ -29,12 +30,12 @@ static KeepFreshManage *manageCustom;
 - (void)toOtainAccess_token:(AccessTokenHandle)successBlock error:(ErrorHandle)errorBlock {
     //请求样例
     //grant_type=client_credentials 为默认
-    //client_id = DZKMuYbEzbLAdmvtuO014Snv
-    //client_secret = UFPp5uyWMsd7NYwsetGoQuEpPKy4LMzA
+    //client_id = m56bCvvc1woeVAmgvocFqacR
+    //client_secret = vBoKwZ4zntTKHawt7ifE1Go0g9tqG5uG
 //https://aip.baidubce.com/oauth/2.0/token?grant_type=client_credentials&client_id=Va5yQRHlA4Fq5eR3LT0vuXV4&client_secret=0rDSjzQ20XUj5itV6WRtznPQSzr5pVw2&
-    NSString *id = @"DZKMuYbEzbLAdmvtuO014Snv";
-    NSString *secret = @"UFPp5uyWMsd7NYwsetGoQuEpPKy4LMzA";
-    NSString *requestString = [NSString stringWithFormat:@"https://aip.baidubce.com/oauth/2.0/token?grant_type=client_credentials&client_id=%@&client_secret=%@", id, secret];
+    NSString *client_id = @"m56bCvvc1woeVAmgvocFqacR";
+    NSString *secret = @"vBoKwZ4zntTKHawt7ifE1Go0g9tqG5uG";
+    NSString *requestString = [NSString stringWithFormat:@"https://aip.baidubce.com/oauth/2.0/token?grant_type=client_credentials&client_id=%@&client_secret=%@", client_id, secret];
     NSURL *url  = [NSURL URLWithString:requestString];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     NSURLSession *session = [NSURLSession sharedSession];
@@ -60,6 +61,16 @@ static KeepFreshManage *manageCustom;
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
     }];
         
+}
+- (void)BaiDuCharacterRecognition:(CharacterRecognitionHandle)successBlock error:(ErrorHandle)errorBlock {
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    NSDictionary *paramDict = @{@"access_token":self.access_token, @"Content-Type":@"application/x-www-form-urlencoded",@"image":self.image, @"language_type":@"CHN_ENG"};
+    [manager POST:@"https://aip.baidubce.com/rest/2.0/ocr/v1/general_basic" parameters:paramDict progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        CharacterRecognitionModel * characterRecognitionModel = [[CharacterRecognitionModel alloc] initWithDictionary:responseObject error:nil];
+        successBlock(characterRecognitionModel);
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        errorBlock(error);
+    }];
 }
 
 - (void)regisetUserToBackGroundWithUser:(NSString *)username pass:(NSString *)password success:(RegisterHandle)successBlock error:(ErrorHandle)errorBlock {

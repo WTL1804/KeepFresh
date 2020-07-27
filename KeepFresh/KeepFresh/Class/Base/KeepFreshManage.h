@@ -14,6 +14,7 @@
 @class ItemsGoodsViewModel;
 @class Items;
 @class UploadImageModel;
+@class CharacterRecognitionModel;
 NS_ASSUME_NONNULL_BEGIN
 typedef void (^AccessTokenHandle)(Access_tokenModel *accessTokenModel);
 typedef void(^ErrorHandle)(NSError *error);
@@ -26,6 +27,7 @@ typedef void (^AcquireHeadImageHandle)(NSDictionary *dict);
 typedef void (^ALLItemsListHandle)(ItemsGoodsViewModel *itemsListViewModel);
 typedef void (^DeletFifhteenHandle)(NSDictionary *dict);
 typedef void (^ModifyStatusCodeHandle)(NSDictionary *dict);
+typedef void (^CharacterRecognitionHandle)(CharacterRecognitionModel *characterRecognitionModel);
 @interface KeepFreshManage : NSObject
 
 //获取百度ai开放能力的key
@@ -35,6 +37,8 @@ typedef void (^ModifyStatusCodeHandle)(NSDictionary *dict);
 
 //百度通用物体识别
 - (void)identification:(PhotoIdentificationHandle)successBlock error:(ErrorHandle)errorBlock;
+//百度文字识别
+- (void)BaiDuCharacterRecognition:(CharacterRecognitionHandle)successBlock error:(ErrorHandle)errorBlock;
 
 //注册请求
 - (void)regisetUserToBackGroundWithUser:(NSString *)username pass:(NSString *)password success:(RegisterHandle)successBlock error:(ErrorHandle)errorBlock;

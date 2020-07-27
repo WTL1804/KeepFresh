@@ -108,10 +108,11 @@
                 [discoveryNav.tabBarItem setImage:tempImageTwo];
                 //    sceneDelegate.window.rootViewController = tabBarController;
                 UIWindow * window = [UIApplication  sharedApplication].windows[1];
-                //  NSLog(@"%@", [UIApplication     sharedApplication].windows);
+                
                 window.rootViewController = tabBarController;
             }
         } error:^(NSError * _Nonnull error) {
+            
         }];
     }
 }
